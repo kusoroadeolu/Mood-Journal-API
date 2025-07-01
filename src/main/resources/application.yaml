@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: moodjournal
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/mood_db
+    username: root
+    password: password
+    driver-class: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+    properties:
+      hibernate:
+        format_sql: true
+
+  docker:
+    compose:
+      enabled: false
+
+
+jwt:
+  secret: 123456
+  expiration: 86400000
