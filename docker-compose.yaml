@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mood-mysql
+    environment:
+      MYSQL_DATABASE: moodjournal
+      MYSQL_USER: mooduser
+      MYSQL_PASSWORD: moodpassword
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  moodjournal-app:
+    build: .
+    container_name: moodjournal-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/moodjournal
+      SPRING_DATASOURCE_USERNAME: mooduser
+      SPRING_DATASOURCE_PASSWORD: moodpassword
+
+    command: ["./wait-for-it.sh", "mysql:3306", "--", "java", "-jar", "app.jar"]
+
+volumes:
+  mysql_data:
