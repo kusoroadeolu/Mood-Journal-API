@@ -103,6 +103,7 @@ public class MoodEntryController {
     }
 
     @GetMapping("/entry/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<MoodEntryResponseDto> getMoodEntryById(@PathVariable Long id){
         var moodEntry = moodEntryService.findMoodEntryById(id);
